@@ -86,3 +86,86 @@ var finances = [
   ['Jan-2017', 138230],
   ['Feb-2017', 671099],
 ];
+
+
+
+
+// // Total number of months
+let total = finances.length;
+console.log("total months", total);
+
+
+
+
+// // Net Total (Profits - Losses)
+var totalProfits = 0;
+var totalLosses = 0;
+
+for (var i = 0; i < finances.length; i++) {
+  var gross = finances[i][1];
+if (gross <= 0) {
+  totalLosses += gross;
+}
+else totalProfits += gross;
+}
+console.log("profits", totalProfits);
+console.log("losses", totalLosses);
+
+console.log("net", totalProfits-totalLosses)
+
+
+
+
+// // The average of the changes in Profit/Loss over the entire period
+let averageChange = (totalProfits - totalLosses);
+console.log("yearly average", averageChange);
+
+
+
+
+// //  Meaning... the average change in profits from month to month 
+function roundToHundredths(num) {
+  return Math.round(num * 100) / 100;}
+
+let average = (totalProfits - totalLosses);
+average =+ (average / finances.length); 
+console.log("monthly average", roundToHundredths(average)); // 1.88
+
+
+
+
+// // (Total/(Number of months - 1) [why -1 ???]
+let variable = (averageChange / total);
+console.log(variable)
+
+
+
+// // The greatest increase in profits (date and amount)
+function myArrayMax(arr) {
+  let len = arr.length;
+  let max = -Infinity;
+  while (len--) {
+    if (arr[len] > max) {
+      max = arr[len];    
+    }
+  }
+return max;
+}
+
+
+// // The greatest decrease in losses (date and amount)
+
+
+
+// // e.g.
+// for (let i = 0; i < finances.length; )
+// // Financial Analysis
+// // ----------------------------
+// // Total Months: 86
+// // Total: $38382578
+// // Average Change: -2315.12
+// // Greatest Increase in Profits/Losses: Feb-2012 ($1926159)
+// // Greatest Decrease in Profits/Losses: Sep-2013 ($-2196167)#
+
+// for (var i = 0; i < finances.length; i++) { 
+// }
