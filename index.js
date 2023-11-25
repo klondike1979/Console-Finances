@@ -90,37 +90,39 @@ var finances = [
 
 
 
-// // Total number of months
+
+
+
+
+// Title 
+console.log("Financial Analysis")
+console.log("------------------------------------")
+
+
+// The total number of months included in the dataset.
 let total = finances.length;
 console.log("total months", total);
 
 
-
-
-// // Net Total (Profits - Losses)
+// The net total amount of Profit/Losses over the entire period.
 var totalProfits = 0;
 var totalLosses = 0;
 
 for (var i = 0; i < finances.length; i++) {
   var gross = finances[i][1];
 if (gross <= 0) {
-  totalLosses += gross;
+  totalLosses += gross; 
 }
 else totalProfits += gross;
 }
-console.log("profits", totalProfits);
+console.log("net", totalProfits-totalLosses);
 console.log("losses", totalLosses);
-
-console.log("net", totalProfits-totalLosses)
-
+console.log("profits", totalProfits);
 
 
-
-// // The average of the changes in Profit/Loss over the entire period
+// The average of the changes in Profit/Losses over the entire period.
 let averageChange = (totalProfits - totalLosses);
 console.log("yearly average", averageChange);
-
-
 
 
 // //  Meaning... the average change in profits from month to month 
@@ -132,40 +134,39 @@ average =+ (average / finances.length);
 console.log("monthly average", roundToHundredths(average)); // 1.88
 
 
-
-
 // // (Total/(Number of months - 1) [why -1 ???]
 let variable = (averageChange / total);
-console.log(variable)
+console.log("average change", variable)
 
 
 
-// // The greatest increase in profits (date and amount)
-function myArrayMax(arr) {
-  let len = arr.length;
-  let max = -Infinity;
-  while (len--) {
-    if (arr[len] > max) {
-      max = arr[len];    
-    }
+// The greatest increase in profits (date and amount) over the entire period.
+var result = finances.reduce(function (acc, current) {
+  if (current[1] > acc.maxValue) {
+    acc.maxValue = current[1];
+    acc.date = current[0];
   }
-return max;
-}
+  return acc;
+}, { maxValue: finances[0][1], date: finances[0][0] });
+
+console.log("The largest financial value is:", result.maxValue);
+console.log("Associated date:", result.date);
 
 
-// // The greatest decrease in losses (date and amount)
+
+var largestFinancialValue = finances.reduce(function (largest, current) {
+  return Math.max(largest, current[1]);
+}, finances[0][1]);
+
+console.log("The largest financial value is:", largestFinancialValue);
 
 
 
-// // e.g.
-// for (let i = 0; i < finances.length; )
-// // Financial Analysis
-// // ----------------------------
-// // Total Months: 86
-// // Total: $38382578
-// // Average Change: -2315.12
-// // Greatest Increase in Profits/Losses: Feb-2012 ($1926159)
-// // Greatest Decrease in Profits/Losses: Sep-2013 ($-2196167)#
 
-// for (var i = 0; i < finances.length; i++) { 
-// }
+// You will need to track what the total change in profits is from month to month and then find the average.
+
+// (Total/(Number of months - 1))
+
+
+
+// The greatest decrease in losses (date and amount) over the entire period.
