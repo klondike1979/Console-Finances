@@ -105,11 +105,11 @@ for (let i = 0; i < finances.length; i++) {
 	} else totalProfits += gross;
 }
 
-console.log("Profits:", totalProfits);
-console.log("Losses:", totalLosses);
-console.log("Net:", totalProfits + totalLosses);
+// console.log("Profits:", totalProfits);
+// console.log("Losses:", totalLosses);
+console.log("Total:", totalProfits + totalLosses);
 
-// The average of the changes in Profit/Losses over the entire period.
+// Calculate Monthly Changes
 function calculateMonthlyChanges(finances) {
 	let monthlyChanges = [];
 
@@ -130,56 +130,31 @@ function calculateMonthlyChanges(finances) {
 }
 
 let monthlyChanges = calculateMonthlyChanges(finances);
-console.log("Monthly Changes:", monthlyChanges);
+console.log(monthlyChanges);
 
-function calculateAverageChange(changes) {
-	let sum = changes.reduce(function (acc, val) {
-		return acc + val;
-	}, 0);
+// Calculate Average Monthly Change
+const averageMonthlyChange =
+	monthlyChanges.reduce((sum, change) => sum + change, 0) /
+	monthlyChanges.length;
 
-	let averageChange = sum / (changes.length - 1);
-	return averageChange;
-}
-
-let averageChange = calculateAverageChange(monthlyChanges);
-console.log("Average Monthly Change:", averageChange);
-
-// //  Meaning... the average change in profits from month to month
-function roundToHundredths(num) {
-	return Math.round(num * 100) / 100;
-}
-
-let average = totalProfits - totalLosses;
-average = +(average / finances.length);
-console.log("Monthly Average", roundToHundredths(average)); // 1.88
-
-// // (Total/(Number of months - 1) [why -1 ???]
-let letiable = averageChange / total;
-console.log("Average Change", letiable);
+console.log("Average Monthly Change:", averageMonthlyChange);
 
 // The greatest increase in profits (date and amount) over the entire period.
-let result = finances.reduce(
-	function (acc, current) {
-		if (current[1] > acc.maxValue) {
-			acc.maxValue = current[1];
-			acc.date = current[0];
-		}
-		return acc;
-	},
-	{ maxValue: finances[0][1], date: finances[0][0] }
-);
+let greatestIncrease = monthlyChanges[0];
 
-console.log("The largest financial value is:", result.maxValue);
-console.log("Associated date:", result.date);
+for (var i = 0; i < monthlyChanges.length; i++) {
+	if (monthlyChanges[i] > greatestIncrease) {
+		greatestIncrease = monthlyChanges[i];
+	}
+}
+console.log("Greatest monthly increase: ", greatestIncrease);
 
-let largestFinancialValue = finances.reduce(function (largest, current) {
-	return Math.max(largest, current[1]);
-}, finances[0][1]);
+// The greatest decrease in profits (date and amount) over the entire period.
+let greatestDecrease = monthlyChanges[0];
 
-console.log("The largest financial value is:", largestFinancialValue);
-
-// You will need to track what the total change in profits is from month to month and then find the average.
-
-// (Total/(Number of months - 1))
-
-// The greatest decrease in losses (date and amount) over the entire period.
+for (var i = 0; i < monthlyChanges.length; i++) {
+	if (monthlyChanges[i] < greatestDecrease) {
+		greatestDecrease = monthlyChanges[i];
+	}
+}
+console.log("Greatest monthly decrease: ", greatestDecrease);
